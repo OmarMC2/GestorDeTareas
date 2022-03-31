@@ -10,13 +10,19 @@ class Tareas {
         Object.keys(this._listado).forEach( key => {
             const tarea = this._listado[key];
             listado.push( tarea);
-            console.log(key);
+            //console.log(key);
         });
         return listado
     }
 
     constructor(){
         this._listado = {};
+    }
+
+    borrarTarea(id = ''){
+        if (this._listado[id]){
+            delete this._listado[id];
+        }
     }
 
     cargarTareasDelArray( tareas = []){
@@ -53,7 +59,7 @@ class Tareas {
                     
                     contador += 1;
                     
-                    console.log(`${contador.toString().green} ${desc} :: ${estado} `)
+                    console.log(`${contador.toString().green} ${desc} :: ${completadoEn.green} `)
                 }
             }
             else{
@@ -68,6 +74,31 @@ class Tareas {
 
         
     }
+
+    toggleComplete( ids = []){
+
+        ids.forEach(id => {
+
+            const tarea = this._listado[id];
+            if ( !tarea.completadoEn ){
+                tarea.completadoEn = new Date().toISOString()
+            }
+
+
+        })
+
+        this.listadoArr.forEach((tarea)=>{
+    
+            if( !ids.includes(tarea.id) ){
+    
+                this._listado[tarea.id].completadoEn = null;
+            }
+    
+    
+        })
+
+    }
+
 }
 
 
